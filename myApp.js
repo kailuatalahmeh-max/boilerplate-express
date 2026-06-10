@@ -4,21 +4,17 @@ let app = express();
 
 console.log("Hello World");
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - ${req.ip}`);
-  next();
-});
-
 app.use("/public", express.static(__dirname + "/public"));
 
 app.use((req, res, next) => {
-  if (req.ip === "24.42.78.151") {
-    res.sendFile(__dirname + "/views/BandPage.html");
-  } else {
-    next();
-  }
-});
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
 
+  if (req.ip === "24.42.78.151") {
+    return res.status(403).send("You are banned");
+  }
+
+  next();
+});
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
