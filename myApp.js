@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 require("dotenv").config();
 let express = require("express");
 let app = express();
@@ -27,14 +29,23 @@ app.get("/json", (req, res) => {
   });
 });
 
-app.get("/users", (req, res) => {
-  res.json([
-    { id: 1, name: "أحمد" },
-    { id: 2, name: "محمد" },
-    { id: 3, name: "سارة" },
-  ]);
-});
+app.get("/users/:id", (req, res) => {
+  const users = [
+    { id: uuidv4(), name: "أحمد" },
+    { id: uuidv4(), name: "محمد" },
+    { id: uuidv4(), name: "سارة" },
+    { id: uuidv4(), name: "جابر" },
+  ];
 
+  const id = Number(req.params.id);
+  const user = users.find((u) => u.id === id);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ message: "المستخدم غير موجود" });
+  }
+});
 app.get("/users/:id", (req, res) => {
   const id = req.params.id;
   res.json({ message: `طلبت المستخدم رقم ${id}` });
