@@ -1,5 +1,3 @@
-const { v4: uuidv4 } = require("uuid");
-
 require("dotenv").config();
 let express = require("express");
 let app = express();
@@ -7,7 +5,6 @@ let app = express();
 app.use(express.json());
 
 console.log("Hello World");
-console.log("صديقي كلاود");
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path} - ${req.ip}`);
@@ -22,27 +19,31 @@ app.get("/", function (req, res) {
 
 app.get("/json", (req, res) => {
   let message = "Hello json";
-
   if (process.env.MESSAGE_STYLE === "uppercase") {
     message = message.toUpperCase();
   }
+  res.json({ message: message });
+});
 
-  res.json({
-    message: message,
-  });
+app.get("/users", (req, res) => {
+  const users = [
+    { id: 1, name: "أحمد" },
+    { id: 2, name: "محمد" },
+    { id: 3, name: "سارة" },
+    { id: 4, name: "جابر" },
+  ];
+  res.json(users);
 });
 
 app.get("/users/:id", (req, res) => {
   const users = [
-    { id: uuidv4(), name: "أحمد" },
-    { id: uuidv4(), name: "محمد" },
-    { id: uuidv4(), name: "سارة" },
-    { id: uuidv4(), name: "جابر" },
+    { id: 1, name: "أحمد" },
+    { id: 2, name: "محمد" },
+    { id: 3, name: "سارة" },
+    { id: 4, name: "جابر" },
   ];
-
   const id = Number(req.params.id);
   const user = users.find((u) => u.id === id);
-
   if (user) {
     res.json(user);
   } else {
@@ -50,9 +51,9 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
-app.get("/users/:id", (req, res) => {
-  const id = req.params.id;
-  res.json({ message: `طلبت المستخدم رقم ${id}` });
+app.post("/users", (req, res) => {
+  const newUser = req.body;
+  res.json({ message: "تم إضافة المستخدم!", user: newUser });
 });
 
 module.exports = app;
