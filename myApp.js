@@ -15,6 +15,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+app.get("/users", (req, res) => {
+  res.send("قائمة المستخدمين");
+});
 app.get("/json", (req, res) => {
   let message = "Hello json";
 
