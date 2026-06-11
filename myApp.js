@@ -4,6 +4,8 @@ require("dotenv").config();
 let express = require("express");
 let app = express();
 
+app.use(express.json())
+
 console.log("Hello World");
 
 app.use((req, res, next) => {
@@ -46,6 +48,8 @@ app.get("/users/:id", (req, res) => {
     res.status(404).json({ message: "المستخدم غير موجود" });
   }
 });
+
+
 app.get("/users/:id", (req, res) => {
   const id = req.params.id;
   res.json({ message: `طلبت المستخدم رقم ${id}` });
