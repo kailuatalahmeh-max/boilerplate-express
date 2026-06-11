@@ -56,4 +56,10 @@ app.post("/users", (req, res) => {
   res.json({ message: "تم إضافة المستخدم!", user: newUser });
 });
 
+app.put("/users/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const updatedData = req.body;
+  res.json({ message: `تم تعديل المستخدم رقم ${id}!`, updatedData });
+});
+
 module.exports = app;
