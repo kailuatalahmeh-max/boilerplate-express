@@ -30,4 +30,12 @@ app.get("/json", (req, res) => {
   });
 });
 
+app.get("/users", (req, res) => {
+  res.json([
+    { id: 1, name: "أحمد" },
+    { id: 2, name: "محمد" },
+    { id: 3, name: "سارة" },
+  ]);
+});
+
 module.exports = app;
