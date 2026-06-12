@@ -62,4 +62,10 @@ app.put("/users/:id", (req, res) => {
   res.json({ message: `تم تعديل المستخدم رقم ${id}!`, updatedData });
 });
 
+app.delete("/users/:id", (req, res) => {
+  const id = Number(req.params.id)  // خذ الID من الرابط بس
+  res.json({ message: `تم حذف المستخدم رقم ${id}!` })
+})
+
+
 module.exports = app;
