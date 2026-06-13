@@ -1,4 +1,10 @@
 require("dotenv").config();
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("تم الاتصال بقاعدة البيانات! ✅"))
+  .catch((err) => console.log("خطأ في الاتصال:", err));
 let express = require("express");
 let app = express();
 
@@ -63,9 +69,8 @@ app.put("/users/:id", (req, res) => {
 });
 
 app.delete("/users/:id", (req, res) => {
-  const id = Number(req.params.id)  // خذ الID من الرابط بس
-  res.json({ message: `تم حذف المستخدم رقم ${id}!` })
-})
-
+  const id = Number(req.params.id);
+  res.json({ message: `تم حذف المستخدم رقم ${id}!` });
+});
 
 module.exports = app;
