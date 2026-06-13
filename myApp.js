@@ -1,4 +1,5 @@
 require("dotenv").config();
+const User = require("./models/User");
 const mongoose = require("mongoose");
 
 mongoose
@@ -57,9 +58,14 @@ app.get("/users/:id", (req, res) => {
   }
 });
 
-app.post("/users", (req, res) => {
-  const newUser = req.body;
-  res.json({ message: "تم إضافة المستخدم!", user: newUser });
+app.post("/users", async (req, res) => {
+  try {
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.json({ message: "تم إضافة المستخدم!", user: newUser });
+  } catch (err) {
+    res.status(500).json({ message: "حدث خطأ!", error: err.message });
+  }
 });
 
 app.put("/users/:id", (req, res) => {
